@@ -4,7 +4,7 @@ use think\Model;
 
 class File extends Model
 {
-    protected $table = 'jjh_picture';
+    protected $table = 'picture';
     /*
     * 图片上传
     */

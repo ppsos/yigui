@@ -1,0 +1,186 @@
+﻿{include file="public/top" /}
+
+<title>品牌管理</title>
+</head>
+<body>
+{include file="public/header,public/menu" /}
+
+<section class="Hui-article-box">
+	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 产品管理 <span class="c-gray en">&gt;</span> 品牌管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+		
+	<div class="Hui-article">
+		<article class="cl pd-20">
+			<div class="text-c">
+				<form class="Huiform" method="post" action="" target="_self">
+					<input type="text" placeholder="分类名称" name="name" value="" class="input-text" style="width:120px">
+					<span class="btn-upload form-group">
+					</span><button type="button" class="btn btn-success" id="" onClick="picture_colume_add(this);"><i class="Hui-iconfont">&#xe600;</i> 添加</button>
+				</form>
+			</div>
+			<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a></span> <span class="r">共有数据：<strong>{:count($data)}</strong> 条</span> </div>
+			<div class="mt-10">
+				<table class="table table-border table-bordered table-bg table-sort">
+					<thead>
+						<tr class="text-c">
+							<th width="25"><input type="checkbox" name="" value=""></th>
+							<th width="70">ID</th>
+							<th width="80">排序</th>
+							<th>分类名称</th>
+							<th>分类状态</th>
+							<th width="200">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						{volist name="data" id="vo"}
+						<tr class="text-c">
+							<td><input type="checkbox" value="{$vo.id}" name="id[]"></td>
+							<td class="id">{$vo.id}</td>
+							<td><input type="text" class="input-text text-c" name="sort" value="{$vo.sort}"></td>
+							<td class="text-c"> {$vo.name}</td>
+							<td class="text-c td-status">{if condition="$vo['status'] == 0"}已禁用{else /}显示{/if}</td>
+							<td class="f-14 product-brand-manage td-manage">
+								{if condition="$vo['status']==1"}
+									<a style="text-decoration:none" onClick="admin_stop(this,'{$vo.id}')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>
+								{else /}
+									<a onclick="admin_start(this,'{$vo.id}')" href="javascript:;" title="启用" style="text-decoration:none"><i class="Hui-iconfont"></i></a>
+								{/if}
+								<a style="text-decoration:none" onClick="product_brand_edit('编辑分类','{:url('category/edit',array('id'=>$vo['id']))}','500px','300px')" href="javascript:;" title="编辑">
+									<i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="active_del(this,'{$vo.id}')" href="javascript:;" title="删除">
+									<i class="Hui-iconfont">&#xe6e2;</i>
+								</a>
+							</td>
+						</tr>
+						{/volist}
+					</tbody>
+				</table>
+			</div>
+		</article>
+	</div>
+</section>
+
+{include file="public/footer" /}
+
+<!--请在下方写此页面业务相关的脚本--> 
+<script type="text/javascript" src="__HUI__/lib/My97DatePicker/4.8/WdatePicker.js"></script>  
+<script type="text/javascript" src="__HUI__/lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+<script type="text/javascript" src="__HUI__/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+function picture_colume_add(job) {
+	var name = $("input[name='name']").val();
+	var url  = "{:request()->url()}";
+	$.post(url,{name:name},function(data){
+		if (data.code>0) {
+			layer.msg(data.msg,function(){
+				window.location.reload();
+			});
+		}else{
+			layer.msg(data.msg);
+		}
+	})
+}
+$('.table-sort').dataTable({
+	"pageLength": 10,         //初始化显示几条数据
+	"aaSorting": [[ 1, "desc" ]],//默认第几个排序
+	"bStateSave": true,//状态保存
+	"aoColumnDefs": [
+	]
+});
+/*分类-修改*/
+function product_brand_edit(title,url,w,h){
+	var index = layer.open({
+		type: 2,
+		area:[w,h],
+		title: title,
+		content: url,
+		end: function () {
+            window.location.reload();
+        }
+	});
+	// layer.full(index);
+}
+
+/*分类-删除*/
+function active_del(obj,id){
+	var url  = "{:url('category/del')}";
+	layer.confirm('确定删除此分类？', function(index){
+		$.post(url,{id:id},function(data){
+			if (data.code > 0) {
+				layer.msg(data.msg,{icon:1,time:1000},function(){
+					location.reload();
+				});
+			}else{
+				layer.msg(data.msg,{icon:1,time:1000});
+			}
+		})
+	}); 
+}
+/*分类-批量删除*/
+function datadel(){
+	var ids = [];
+	var url = "{:url('category/del')}";
+	$("input[name='id[]']:checkbox:checked").each(function() {
+        ids.push($(this).val());
+    });
+    layer.confirm('确认要删除吗？',function(index){
+	    $.post(url,{id:ids},function(data){
+			if (data.code > 0) {
+				layer.msg(data.msg,{icon:1,time:1000},function(){
+					location.reload();
+				});
+			}else{
+				layer.msg(data.msg,{icon:1,time:1000});
+			}
+		})
+	});
+}
+/*分类-排序修改*/
+$("input[name='sort']").blur(function(){
+	var url  = "{:url('category/edit')}";
+	var sort = $(this).val();
+	var id   = $(this).parent().parent().find('.id').text();
+	
+	$.post(url,{id:id,sort:sort},function(data){
+		if (data.code > 0) {
+			layer.msg(data.msg,{icon:1,time:1000},function(){
+				location.reload();
+			});
+		}else{
+			layer.msg(data.msg,{icon:1,time:1000});
+		}
+	})
+})
+/*管理员-停用*/
+function admin_stop(obj,id){
+	layer.confirm('确认要停用吗？',function(index){
+		$.post("{:url('category/get_status')}",{id:id,status:'0'},function(data){
+			if (data.code > 0) {
+				$(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_start(this,id)" href="javascript:;" title="启用" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>');
+				$(obj).parents("tr").find(".td-status").html('已禁用');
+				$(obj).remove();
+				layer.msg('已停用!',{icon: 6,time:1000});
+			}else{
+				layer.msg('停用失败!',{icon: 5,time:1000});
+			}
+		});
+		
+	});
+}
+/*管理员-启用*/
+function admin_start(obj,id){
+	layer.confirm('确认要启用吗？',function(index){
+		$.post("{:url('category/get_status')}",{id:id,status:'1'},function(data){
+			if (data.code > 0) {
+				$(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_stop(this,id)" href="javascript:;" title="停用" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>');
+					$(obj).parents("tr").find(".td-status").html('显示');
+					$(obj).remove();
+					layer.msg('已显示!', {icon: 6,time:1000});
+			}else{
+				layer.msg('停用失败!',{icon: 5,time:1000});
+			}
+		});
+	});
+}
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>
