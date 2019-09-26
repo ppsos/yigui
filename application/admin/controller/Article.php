@@ -11,8 +11,10 @@ class Article extends Base
             $cate = db('category') -> field('name') -> find($va['category_id']);
             $data[$k]['category'] = $cate['name'];
         }
+        $category = db('category') -> order("sort desc") -> where("status",1) -> select();
         return $this -> fetch("",[
             'data' => $data,
+            'category' => $category
         ]);
     }
 
@@ -72,6 +74,30 @@ class Article extends Base
                 'res' => $res,
                 'category' => $category,
             ]);
+        }
+    }
+
+    // 删除
+    public function del(){
+        $data = input('post.');
+        $ids  = $data['id'];
+        
+        if (db('document')->delete($ids)) {
+            $this -> success('数据删除成功!');
+        }else{
+            $this -> error('数据删除失败!');
+        }
+    }
+
+    // 停用启用功能
+    public function get_status($id,$status){
+        if (!$id) {
+            $this -> error('数据错误!');
+        }
+        if (db('document')->where('id',$id)->setField('status',$status)) {
+            $this -> success('修改成功!');
+        }else{
+            $this -> error('修改失败!');
         }
     }
 }

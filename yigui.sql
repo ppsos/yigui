@@ -10,10 +10,33 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-09-26 00:46:09
+Date: 2019-09-26 18:35:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for banner
+-- ----------------------------
+DROP TABLE IF EXISTS `banner`;
+CREATE TABLE `banner` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `title` varchar(12) NOT NULL COMMENT '图片标题',
+  `cover_id` int(10) NOT NULL COMMENT '图片ID',
+  `sort` int(10) NOT NULL DEFAULT '0' COMMENT '排序',
+  `link` varchar(255) NOT NULL COMMENT '链接地址',
+  `target` int(2) NOT NULL DEFAULT '0' COMMENT '是否新窗口打开 1是',
+  `create_time` int(10) NOT NULL COMMENT '创建时间',
+  `status` int(4) NOT NULL COMMENT '是否显示',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of banner
+-- ----------------------------
+INSERT INTO `banner` VALUES ('1', '图片标题', '6', '0', '是打发斯蒂芬撒旦法撒旦法', '1', '1569485082', '1');
+INSERT INTO `banner` VALUES ('2', 'test', '5', '0', '是打发斯蒂芬撒旦法撒旦法', '1', '1569488407', '1');
+INSERT INTO `banner` VALUES ('3', '123123', '5', '0', '士大夫撒旦防守打法f', '0', '1569488444', '1');
 
 -- ----------------------------
 -- Table structure for category
@@ -70,15 +93,17 @@ CREATE TABLE `manager` (
   `pwd` char(32) NOT NULL COMMENT '密码',
   `login_times` int(10) NOT NULL DEFAULT '0' COMMENT '登录次数',
   `last_login_time` int(10) NOT NULL COMMENT '最后登录时间',
+  `role` int(4) NOT NULL COMMENT '角色 0超级管理员 1总编 2栏目主编',
   `status` tinyint(4) DEFAULT '0' COMMENT '用户状态',
   `last_login_ip` char(35) DEFAULT NULL COMMENT '登录IP',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of manager
 -- ----------------------------
-INSERT INTO `manager` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '0', '1569429714', '1', '2130706433');
+INSERT INTO `manager` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '2', '1569492056', '0', '1', '2130706433');
+INSERT INTO `manager` VALUES ('2', '总编', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1', '1', null);
 
 -- ----------------------------
 -- Table structure for picture
@@ -93,7 +118,7 @@ CREATE TABLE `picture` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of picture
@@ -102,3 +127,5 @@ INSERT INTO `picture` VALUES ('1', '20190925/34fe9754fbc194249315d156cf9dda65.jp
 INSERT INTO `picture` VALUES ('2', '20190926/e3ba942db6a52d134c3079563df85f0c.jpg', '', '82ab0e11fc58732ab04a77562b7d5045', '5e488b7810b529ad6c88424d2e0a04ead9010154', '1', '1569428205');
 INSERT INTO `picture` VALUES ('3', '20190926/ae268d47e7e72574b5f9d8a02137c56d.jpg', '', '8e196f4c9394a77904da371d098eec96', '666b6694dab18c937d24c8db83a449a29a9506f0', '1', '1569429040');
 INSERT INTO `picture` VALUES ('4', '20190926/00e4ffe7e89c20e701d295a9a85c2e6f.png', '', 'a0519cde5499a68607b30471be41ad11', '4f72e9e7f465c2474123cb924b2c86f02a27b2d5', '1', '1569429873');
+INSERT INTO `picture` VALUES ('5', '20190926/6e84cd2fa0b1c775aadb1a077eaf129a.jpg', '', '90cb41a981bf009f55217aa5fc4dd545', '472126ad7147ff4d3af1b18ec381a4e8a08ac693', '1', '1569485029');
+INSERT INTO `picture` VALUES ('6', '20190926/8e09e8cca2df5411350c5d5a53b77e2c.jpg', '', '130aa0b92a0dec42ddb90cf2c0b4f8eb', 'cc4d607d4b2b0abbf818ecce2d34fecd26ae14c0', '1', '1569487828');

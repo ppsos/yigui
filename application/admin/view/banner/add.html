@@ -1,0 +1,118 @@
+{include file="public/top" /}
+
+<title>新增幻灯片</title>
+<link href="__HUI__/lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="__HUI__/lib/layui/css/layui.css" media="all">
+</head>
+<body>
+<div class="page-container">
+	<form class="form form-horizontal" id="form-banner-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">图片标题：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="" name="title">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">排序值：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="0" placeholder="" id="" name="sort">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">是否显示：</label>
+			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+				<div class="check-box">
+					<input type="checkbox" name="status" checked id="checkbox-1">
+					<label for="checkbox-1">&nbsp;</label>
+				</div>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">是否新窗口打开：</label>
+			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+				<div class="check-box">
+					<input type="checkbox"  name="target" id="checkbox-target">
+					<label for="checkbox-target">&nbsp;</label>
+				</div>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">图片链接：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="" name="link">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">缩略图：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<div class="uploader-thum-container">
+					<button type="button" class="layui-btn" id="cover">
+						<i class="layui-icon">&#xe67c;</i>上传图片
+					</button>
+					<div id="image"></div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button id="add_banner" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存并提交审核</button>
+				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+			</div>
+		</div>
+	</form>
+</div>
+</div>
+
+{include file="public/footer" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__HUI__/lib/layui/layui.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.skin-minimal input').iCheck({
+		checkboxClass: 'icheckbox-blue',
+		radioClass: 'iradio-blue',
+		increaseArea: '20%'
+	});
+
+	layui.use('upload', function(){
+		var upload = layui.upload;
+
+		// 单图上传
+		var uploadInst = upload.render({
+			elem: '#cover' //绑定元素
+			,url: "{:url('update/image')}" //上传接口
+			,done: function(res){
+				//上传完毕回调
+				$("#image").html('<img style="display:block;width:200px;height:80px;" src="'+res.data.src+'" alt=""><input type="hidden" name="cover_id" value="'+res.data.cover_id+'">');
+			}
+			,error: function(res){
+				layer.msg(res.msg);
+			}
+		});
+	});
+
+	// 添加幻灯片
+	$("#add_banner").click(function(){
+		var url  = "{:request()->url()}";
+		var data = $("#form-banner-add").serialize();
+    	data = decodeURIComponent(data,true);
+    	
+    	$.post(url,data,function(data){
+		    if (data.code>0) {
+		        layer.msg(data.msg,function(){
+		          var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+		          parent.layer.close(index); //再执行关闭 
+		        });
+		    }else{
+		        layer.msg(data.msg);
+		    }
+	    })
+    	return false;
+	})
+});
+</script>
+</body>
+</html>

@@ -35,6 +35,7 @@ class Manager extends Model
         $data = array(
             'last_login_time' => time(),
             'last_login_ip'   => request()->ip(1),
+            'login_times'     => $user['login_times'] + 1,
         );
         $this->save($data,['id' => $user['id']]);
         session('user_id', $user['id']);

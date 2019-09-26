@@ -37,11 +37,12 @@ class Manager extends Controller
     }
 
     public function index(){
+        if (!is_login()) {
+            $this->error('还没登录，即将跳转到登录页面',url('manager/login'));
+        }
         $res = model('Manager') -> GetManager();
-        $count = count($res);
         return $this -> fetch('',[
-            'res'   => $res,
-            'count' => $count,
+            'res'   => $res
         ]);
     }
 
@@ -77,7 +78,7 @@ class Manager extends Controller
         }
     }
 
-    // 修改商品
+    // 修改
     public function edit($id){
         if (!$id) {
             $this -> error('商品获取失败!');
@@ -133,6 +134,14 @@ class Manager extends Controller
         }else{
             $this -> error('数据修改失败!');
         }
+    }
+
+    // 退出登录
+    public function loginOut(){
+        session('admin_username', null);
+        session('admin_id', null);
+
+        $this->redirect(url('index'));
     }
 
     public function captcha()
