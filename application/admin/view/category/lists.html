@@ -154,7 +154,7 @@ function admin_stop(obj,id){
 	layer.confirm('确认要停用吗？',function(index){
 		$.post("{:url('category/get_status')}",{id:id,status:'0'},function(data){
 			if (data.code > 0) {
-				$(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_start(this,id)" href="javascript:;" title="启用" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>');
+				$(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_start(this,'+id+')" href="javascript:;" title="启用" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>');
 				$(obj).parents("tr").find(".td-status").html('已禁用');
 				$(obj).remove();
 				layer.msg('已停用!',{icon: 6,time:1000});
@@ -170,7 +170,7 @@ function admin_start(obj,id){
 	layer.confirm('确认要启用吗？',function(index){
 		$.post("{:url('category/get_status')}",{id:id,status:'1'},function(data){
 			if (data.code > 0) {
-				$(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_stop(this,id)" href="javascript:;" title="停用" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>');
+				$(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_stop(this,'+id+')" href="javascript:;" title="停用" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>');
 					$(obj).parents("tr").find(".td-status").html('显示');
 					$(obj).remove();
 					layer.msg('已显示!', {icon: 6,time:1000});

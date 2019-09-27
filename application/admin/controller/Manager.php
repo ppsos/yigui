@@ -81,23 +81,26 @@ class Manager extends Controller
     // 修改
     public function edit($id){
         if (!$id) {
-            $this -> error('商品获取失败!');
+            $this -> error('用户获取失败!');
         }
         if (request()->isPost()) {
             $data = input('param.');
 
             if (isset($data['pwd']) && isset($data['pwd'])) {
-                if (empty($data['pwd'])) {
-                    $this -> error('密码不能为空!');
+                if (empty($data['pwd']) && empty($data['pwd2'])) {
+                    unset($data['pwd']);
+                    unset($data['pwd2']);
                 }
-                if (empty($data['pwd2'])) {
-                    $this -> error('确认密码不能为空!');
+
+                if (isset($data['pwd'])) {
+                    if ($data['pwd'] != $data['pwd2']) {
+                        $this -> error('两次密码不一致!');
+                    }
                 }
-                if ($data['pwd'] != $data['pwd2']) {
-                    $this -> error('两次密码不一致!');
+                if (isset($data['pwd'])) {
+                    $data['pwd'] = model('Manager') -> setPasswordAttr($data['pwd2']);
+                    unset($data['pwd2']);
                 }
-                $data['pwd'] = model('Manager') -> setPasswordAttr($data['pwd2']);
-                unset($data['pwd2']);
             }
 
             if (db('Manager')->where('id',$id)->update($data)) {
@@ -116,7 +119,7 @@ class Manager extends Controller
     // 删除数据
     public function del(){
         $data = input('param.');
-        $ids  = $data['ids'];
+        $ids  = $data['id'];
         
         if (db('Manager')->delete($ids)) {
             $this -> success('数据删除成功!');

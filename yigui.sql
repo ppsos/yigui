@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-09-26 18:35:30
+Date: 2019-09-27 10:46:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -97,13 +97,14 @@ CREATE TABLE `manager` (
   `status` tinyint(4) DEFAULT '0' COMMENT '用户状态',
   `last_login_ip` char(35) DEFAULT NULL COMMENT '登录IP',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of manager
 -- ----------------------------
-INSERT INTO `manager` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '2', '1569492056', '0', '1', '2130706433');
+INSERT INTO `manager` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '3', '1569549623', '0', '1', '2130706433');
 INSERT INTO `manager` VALUES ('2', '总编', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1', '1', null);
+INSERT INTO `manager` VALUES ('3', '栏目主编', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '2', '1', null);
 
 -- ----------------------------
 -- Table structure for picture
