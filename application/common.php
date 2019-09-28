@@ -16,11 +16,11 @@ use think\Db;
  * @return integer 0-未登录，大于0-当前登录用户ID
  */
 function is_login(){
-    $user_id = session('user_id');
-    if (empty($user_id)) {
+    $user_id = session('name');
+    if (empty($name)) {
         return 0;
     } else {
-        return $user_id;
+        return $name;
     }
 }
 

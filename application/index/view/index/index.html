@@ -86,9 +86,16 @@
 								<img src="__IMG__/admin.jpg" alt="竹林听雨">
 							</div>
 							<p class="blogerinfo-nickname">竹林听雨</p>
-							<p class="blogerinfo-introduce">有个被嘲笑的梦想万一有天实现了呢？up up~</p>
+							{if condition="is_login()"}
+			                <p class="blogerinfo-nickname">{:get_username()}</p>
+			                <a href="{:url('user/index')}">个人中心</a>
+			                <a href="{:url('login/loginOut')}">退出</a>
+			                {else /}
+			                <a href="{:url('login/index')}"><p class="blogerinfo-nickname">登陆</p></a>
+			                {/if}
+							<!-- <p class="blogerinfo-introduce">有个被嘲笑的梦想万一有天实现了呢？up up~</p>
 							<p class="blogerinfo-location"><i class="fa fa-location-arrow"></i>&nbsp;<span>湖南-湘潭</span></p>
-							<hr>
+							<hr> -->
 							<div class="blogerinfo-contact">
 								<a target="_blank" id="QQjl" title="QQ交流" href="http://shang.qq.com/email/stop/email_stop.html?qq=2896543728"><i class="fa fa-qq fa-2x"></i></a>
 								<a target="_blank" id="gwxx" title="给我写信" href="mailto:2896543728@qq.com"><i class="fa fa-envelope fa-2x"></i></a>
