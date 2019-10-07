@@ -1,7 +1,13 @@
 		<nav id="h" class="blog-nav layui-header">
 			<div class="blog-container">
-				<a href="/QQ/qqLogin" class="blog-user">
-					<i class="fa fa-qq"></i>
+				<a style="color:#fff;font-size:18px;right:50px;" href="{:url('user/login')}" class="blog-user">
+					登录
+				</a>
+				<a style="color:#fff;font-size:18px;right:40px;" href="javascript:;" class="blog-user">
+					|
+				</a>
+				<a style="color:#fff;font-size:18px;" href="{:url('user/reg')}" class="blog-user">
+					注册
 				</a>
 
 				<a class="blog-logo" href="index.html">Long</a>
@@ -11,7 +17,7 @@
 						<a href="/"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
 					</li>
 					<li class="layui-nav-item">
-						<a href="article.html"><i class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a>
+						<a href="{:url('article/index')}"><i class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a>
 					</li>
 					<li class="layui-nav-item">
 						<a href="mixed_pic.html"><i class="fa fa-paper-plane-o fa-fw"></i>&nbsp;杂七杂八</a>

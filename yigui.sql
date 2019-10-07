@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-09-28 11:32:48
+Date: 2019-10-07 18:03:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -95,13 +95,14 @@ CREATE TABLE `fac` (
   `hot_status` int(2) NOT NULL COMMENT '烘干机状态',
   `status` int(2) NOT NULL COMMENT '设备状态',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of fac
 -- ----------------------------
-INSERT INTO `fac` VALUES ('0', '', '设备一号', '1', '1', '1');
-INSERT INTO `fac` VALUES ('2', '', '设备二号', '0', '1', '1');
+INSERT INTO `fac` VALUES ('3', '7w9ce4lorcm4c7617ch9ahh2hjtjfldt', '设备一号', '1', '1', '1');
+INSERT INTO `fac` VALUES ('2', '0b8evr12h3t80o4roa4d4h5kqljtf5uw', '设备二号', '0', '1', '1');
+INSERT INTO `fac` VALUES ('4', 'dsvobmtmn0s6g8oo2kp12irhqbeijlj0', '设备三号', '1', '1', '1');
 
 -- ----------------------------
 -- Table structure for manager
@@ -122,7 +123,7 @@ CREATE TABLE `manager` (
 -- ----------------------------
 -- Records of manager
 -- ----------------------------
-INSERT INTO `manager` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '4', '1569635548', '0', '1', '2130706433');
+INSERT INTO `manager` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '5', '1569659912', '0', '1', '2130706433');
 INSERT INTO `manager` VALUES ('2', '总编', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1', '1', null);
 INSERT INTO `manager` VALUES ('3', '栏目主编', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '2', '1', null);
 
@@ -139,7 +140,7 @@ CREATE TABLE `picture` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of picture
@@ -153,3 +154,27 @@ INSERT INTO `picture` VALUES ('6', '20190926/8e09e8cca2df5411350c5d5a53b77e2c.jp
 INSERT INTO `picture` VALUES ('7', '20190927/6c95a2b6d07e7a3208ca5657aac047a7.jpg', '', '547f70e2a466725845daa21694ee31cd', '19fad91cb1f5dbb598851cbe3e973a7c93b4cb48', '1', '1569569156');
 INSERT INTO `picture` VALUES ('8', '20190927/e3c6dfec113b3a0d0ef8a6fc78616bf1.jpg', '', '2634fe8807381cec8f02b26a83396621', '00affd03f1284711b98d058b0c5e781d57fcaac6', '1', '1569569191');
 INSERT INTO `picture` VALUES ('9', '20190927/5b42b9cc694181062527227ae4df1b28.jpg', '', '81387f153dc9aa831d536b6d6e004f0f', 'c251c1c8f2fcdbbcf229ec72e8886fef6b892909', '1', '1569569204');
+INSERT INTO `picture` VALUES ('10', '20191007/ce35abdfcf7ce30500b98c3a6a4c2f1e.jpg', '', 'a5e4e55dcccd1580c5584e55d47a1ce0', 'e646973211fdbaabdb9458720ab49688b5a9553d', '1', '1570431759');
+INSERT INTO `picture` VALUES ('11', '20191007/d1ef8736d35c97c9a88597561d7b6a05.jpg', '', 'fb1c0bf1695c586e6cc94d4de79f55dd', 'c1de51a6b8f2757d500608f6b1846cfcba834847', '1', '1570431939');
+INSERT INTO `picture` VALUES ('12', '20191007/6cfcee71e2037a5078b96b3ed1ec854e.jpg', '', '2ba1d8606c3831e2ba4a12081b965e30', 'fc8ea402de938da27fcdf5450feadfae9282270a', '1', '1570432569');
+INSERT INTO `picture` VALUES ('13', '20191007/878c8dc99cb30a0b2d4c321754c3ec0c.jpg', '', 'b53329f89fcb7ab7c2effe7f5bcf5278', '4615f81e799bf14456576581b432eb1231f60e96', '1', '1570434289');
+INSERT INTO `picture` VALUES ('14', '20191007/e45cd89c8efcffc4a4887ff087b2c88e.jpg', '', '3608fb4b788a221f975adb4938eabdef', '51b9b4d51e51225dd21012f08778a23eaaa5da5e', '1', '1570436443');
+
+-- ----------------------------
+-- Table structure for product
+-- ----------------------------
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `title` varchar(12) NOT NULL COMMENT '标题',
+  `price` varchar(12) NOT NULL COMMENT '价格',
+  `cover_id` int(10) NOT NULL COMMENT '缩略图',
+  `status` int(4) NOT NULL COMMENT '是否显示',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of product
+-- ----------------------------
+INSERT INTO `product` VALUES ('1', '三人沙发套干洗单次', '80', '13', '1');
+INSERT INTO `product` VALUES ('2', '衣服干洗（一桶）', '10', '14', '1');

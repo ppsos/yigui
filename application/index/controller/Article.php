@@ -4,6 +4,13 @@ use \think\Controller;
 
 class Article extends Home
 {
+    public function index(){
+        $lists = db('document') -> select();
+        return $this -> fetch('',[
+            'lists' => $lists,
+        ]);
+    }
+
     public function detail($id)
     {
     	if (!$id) {
