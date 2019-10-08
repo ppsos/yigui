@@ -316,7 +316,7 @@ input.input-error{
 }
 
 /*注册*/
-.reg-wrap{margin: 20px auto; width: 320px;height: 82px;border-radius: 4px; background-color: #dde6ea;}
+.reg-wrap{margin: 20px auto; width: 320px;border-radius: 4px; background-color: #dde6ea;}
 .reg-btn{margin: 40px auto; width: 320px;height: 40px;line-height: 40px;border: 1px solid #598fab; background-color: #2a799f;border-radius: 8px; cursor: pointer;}
 .reg-btn:hover{color: #fff;}
 .reg-wrap .reg-number{height: 40px;line-height: 40px;}

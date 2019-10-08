@@ -27,14 +27,24 @@
 					<div class="reg-wrap border">
 						<div class="reg-number border-bottom">
 							<div class="fl reg-area text-gray">+86</div>
-							<input type="text" class="fl reg-phone" name="mobile" id="mobile" placeholder="请输入手机号码" datatype="m" />
+							<input type="text" class="fl reg-phone" name="mobile" id="mobile" placeholder="请输入手机号码" value="18249985330" datatype="m" />
 						</div>
-						<div class="reg-number">
+						<div class="reg-number border-bottom">
 							<input type="text" disabled="disabled" name="vcode" id="vcode" class="fl padding-big-left reg-code" placeholder="请输入验证码" />
 							<a href="#" class="fl reg-send" id="send">发送验证码</a>
 						</div>
+						<div class="reg-number border-bottom">
+							<div class="pwd">
+								<input type="password" placeholder="密码" datatype="*" id="password" name="password" nullmsg="请填写帐号密码">
+							</div>
+						</div>
+						<div class="reg-number">
+							<div class="pwd">
+								<input type="password" placeholder="密码" datatype="*" id="password" name="password" nullmsg="请填写帐号密码">
+							</div>
+						</div>
 					</div>
-					<input type="hidden" name="formhash" value="5abb5d21" />
+
 					<div class="margin-large-top padding-big-top">
 						<input type="submit" class="btn text-big" value="立即注册">
 					</div>
@@ -93,6 +103,7 @@
 			/*发送验证码*/
 			$("#send").click(function() {
 				var obj = $("input[name=mobile]");
+				var url = "{:url('aliyun/send_sms')}";
 				if ($(this).attr('disabled')) {
 					return false;
 				}
@@ -101,6 +112,14 @@
 					obj.focus();
 					return false;
 				}
+
+				$.post(url,{mobile:obj.val()},function(data){
+					if (data.code > 0) {
+						_status(60);
+					}else{
+						
+					}
+				})
 			});
 
 			function _status(count) {
@@ -116,7 +135,6 @@
 							path: '/',
 							expires: (1 / 86400) * count
 						});
-
 					} else {
 						clearInterval(resend);
 						$send_sms.html("重获验证码").removeAttr('disabled');
