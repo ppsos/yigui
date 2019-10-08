@@ -57,18 +57,18 @@ function send_sms($to, $model, $code)
 {
     require_once '../extend/Aliyun_sms/vendor/autoload.php';
     Config::load(); //加载区域结点配置
-    $accessKeyId = 'LTAIIpoujVUWuWRN';
-    $accessKeySecret = 'q2jrhWPgSvVLxexsMeJoss6cFs5U0v';
+    $accessKeyId = 'LTAI4Fe7icorifvdy5Gcyzmg';
+    $accessKeySecret = '0c2ysACsjrwpOpuxxfFbCodBv1ESkB';
     $templateParam = array('code'=>$code);
     //短信签名
-    $signName = '广西导游网';
+    $signName = '衣橱邦';
     //短信模板ID
     switch ($model) {
         case 1:
-            $templateCode = 'SMS_101090064'; // 注册登录短信验证码模板
+            $templateCode = 'SMS_175076022'; // 注册登录短信验证码模板
             break;
         case 2:
-            $templateCode = 'SMS_101090064'; // 重置密码短信验证码模板
+            $templateCode = 'SMS_175076022'; // 重置密码短信验证码模板
             break;
     }
     //短信API产品名（短信产品名固定，无需修改）
