@@ -3,9 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-		<title>登录</title>
-		<meta name="keywords" content="某某科技" />
-		<meta name="description" content="某某科技" />
+		<title>注册</title>
 		<link href="__CSS__/layout.css" rel="stylesheet" type="text/css">
 		<link href="__CSS__/login.css" rel="stylesheet" type="text/css">
 		<script type="text/javascript" src="__JS__/jquery-1.7.2.min.js"></script>
@@ -23,24 +21,25 @@
 				<!--注册-->
 				<div class="text-big text-center logo-color">同一个账号，连接一切</div>
 				<div class=" text-center margin-small-top logo-color text-small">控制台 | 云平台 | 论坛 | 云市场 </div>
-				<form class="register-form" name="register" action="" method="post" autocomplete="off">
+				<form class="register-form" name="register" action="{:request()->url()}" method="post" autocomplete="off">
 					<div class="reg-wrap border">
 						<div class="reg-number border-bottom">
 							<div class="fl reg-area text-gray">+86</div>
-							<input type="text" class="fl reg-phone" name="mobile" id="mobile" placeholder="请输入手机号码" value="18249985330" datatype="m" />
+							<input type="text" class="fl reg-phone" name="mobile" id="mobile" placeholder="请输入手机号码" value="" datatype="m" />
 						</div>
 						<div class="reg-number border-bottom">
-							<input type="text" disabled="disabled" name="vcode" id="vcode" class="fl padding-big-left reg-code" placeholder="请输入验证码" />
-							<a href="#" class="fl reg-send" id="send">发送验证码</a>
+							<input type="text" disabled="disabled" name="code" id="code" nullmsg="请填写帐号密码" class="fl padding-big-left reg-code" placeholder="请输入验证码" />
+							<a href="javascript:;" class="fl reg-send" id="send">发送验证码</a>
 						</div>
 						<div class="reg-number border-bottom">
 							<div class="pwd">
 								<input type="password" placeholder="密码" datatype="*" id="password" name="password" nullmsg="请填写帐号密码">
 							</div>
 						</div>
+						<input type="hidden" value="" pluginhidden="swfupload">
 						<div class="reg-number">
 							<div class="pwd">
-								<input type="password" placeholder="密码" datatype="*" id="password" name="password" nullmsg="请填写帐号密码">
+								<input type="password" placeholder="确认密码" datatype="*" id="repassword" name="repassword" nullmsg="请填写确认密码">
 							</div>
 						</div>
 					</div>
@@ -48,7 +47,6 @@
 					<div class="margin-large-top padding-big-top">
 						<input type="submit" class="btn text-big" value="立即注册">
 					</div>
-					<!-- <div class="reg-btn text-center text-big logo-color" type="submit">立即注册</div> -->
 				</form>
 				<div class="forget">
 					<a href="repassword.html" class="forget-pwd text-small fl">忘记登录密码？</a>
@@ -89,13 +87,12 @@
 						if (msg) popup('' + msg + '');
 					},
 					callback: function(ret) {
-						popup('' + ret.info + '');
-						if (ret.status == 1) {
-							if (ret.uc_user_synlogin) {
-								$("body").append(ret.uc_user_synlogin);
-							}
-							window.location.href = ret.url;
-						}
+						if (ret.code > 0) {
+							popup(ret.msg);
+							setTimeout(function(){window.location.href = ret.url;}, 2000);
+						}else {
+							popup(ret.msg);
+						};
 					}
 				})
 			});
@@ -115,9 +112,10 @@
 
 				$.post(url,{mobile:obj.val()},function(data){
 					if (data.code > 0) {
+						popup(data.msg);
 						_status(60);
 					}else{
-						
+						popup(data.msg);
 					}
 				})
 			});
@@ -130,7 +128,7 @@
 					count--;
 					if (count > 0) {
 						$('#send').html(count + '秒后重试');
-						$("input[name='vcode']").removeAttr('disabled');
+						$("input[name='code']").removeAttr('disabled');
 						$.cookie("register_vcode", count, {
 							path: '/',
 							expires: (1 / 86400) * count

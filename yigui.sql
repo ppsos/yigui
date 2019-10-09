@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-10-07 18:03:15
+Date: 2019-10-09 11:51:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -178,3 +178,42 @@ CREATE TABLE `product` (
 -- ----------------------------
 INSERT INTO `product` VALUES ('1', '三人沙发套干洗单次', '80', '13', '1');
 INSERT INTO `product` VALUES ('2', '衣服干洗（一桶）', '10', '14', '1');
+
+-- ----------------------------
+-- Table structure for sms
+-- ----------------------------
+DROP TABLE IF EXISTS `sms`;
+CREATE TABLE `sms` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `mobile` varchar(15) NOT NULL COMMENT '手机号码',
+  `code` int(6) NOT NULL COMMENT '验证码',
+  `send_time` int(12) NOT NULL COMMENT '发送时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sms
+-- ----------------------------
+INSERT INTO `sms` VALUES ('1', '18577786023', '781591', '1570593050');
+
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` varchar(25) NOT NULL COMMENT '用户名',
+  `mobile` varchar(25) NOT NULL COMMENT '手机号码',
+  `password` char(32) NOT NULL COMMENT '密码',
+  `login_times` int(10) NOT NULL DEFAULT '0' COMMENT '登录次数',
+  `last_login_time` int(10) NOT NULL COMMENT '最后登录时间',
+  `status` tinyint(4) DEFAULT '0' COMMENT '用户状态',
+  `last_login_ip` char(35) DEFAULT NULL COMMENT '登录IP',
+  `create_time` int(12) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES ('1', '', '18577786023', 'e10adc3949ba59abbe56e057f20f883e', '1', '1570593079', '1', '2130706433', '1570593069');

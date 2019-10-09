@@ -6,12 +6,109 @@ class User extends Home
 {
     public function login()
     {
-        return $this -> fetch();
+        if (request()->isPost()) {
+            $data = input('post.');
+            if (!isset($data['mobile'])) {
+                $this->error('请输入手机号码！');
+            }
+            if (!isset($data['password'])) {
+                $this->error('请输入密码！');
+            }
+
+            $code = $this -> ChenkUserPwd($data['mobile'],$data['password']);
+
+            if ($code < 0) {
+                switch($code) {
+                    case -1: $error = '用户不存在或被禁用！'; break; //系统级别禁用
+                    case -2: $error = '密码错误！'; break;
+                    default: $error = '未知错误！'; break; 
+                }
+                $this -> error($error);
+            }else{
+                $this -> success('登录成功！','index/user/index');
+            }
+        }else{
+            return $this -> fetch();
+        }
     }
 
     public function reg()
     {
-        return $this -> fetch();
+        if (request()->isPost()) {
+            $data = input('post.');
+            if (!isset($data['code'])) {
+                $this->error('请输入验证码！');
+            }
+
+            $code_status = $this -> CheckSmsCode($data['mobile'],$data['code']);
+            if (!$code_status) {
+                $this->error('短信验证码错误！');
+            }
+
+            if ($data['password'] != $data['repassword']) {
+                $this->error('两次密码输入不正确！');
+            }
+
+            unset($data['repassword']);
+            unset($data['code']);
+            $data['password'] = md5($data['password']);
+            $data['create_time'] = time();
+            $data['status'] = 1;
+
+            if (db('user') -> insert($data)) {
+                $this -> success('注册成功！','index/user/login');
+            }else{
+                $this->error('注册失败，请重新填写内容！');
+            }
+
+        }else{
+            return $this -> fetch();
+        }
+    }
+
+    // 检查用户登录情况
+    private function ChenkUserPwd($mobile,$password){
+        $map['mobile'] = $mobile;
+        $map['status'] = 1;
+        $user = db('user') -> where($map) -> find();
+
+        if ($user) {
+            if (md5($password) != $user['password']) {
+                return -2;
+            }else{
+                // 登录成功之后的操作
+                $this->autoLogin($user);
+                return true;
+            }
+        }else{
+            return -1;
+        }
+    }
+
+    // 用户登录操作
+    private function autoLogin($user){
+        /* 更新登录信息 */
+        $data = array(
+            'last_login_time' => time(),
+            'last_login_ip'   => request()->ip(1),
+            'login_times'     => $user['login_times'] + 1,
+        );
+        db('user')->where('id',$user['id'])->update($data);
+        session('user_id', $user['id']);
+    }
+
+    // 短信验证
+    private function CheckSmsCode($mobile,$code){
+        $data = array(
+            'mobile' => $mobile,
+            'code'   => $code,
+        );
+        $res = db('sms') -> where($data) -> order('send_time desc') -> find();
+        if ($res) {
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public function index()

@@ -16,7 +16,7 @@ class Manager extends Controller
 	    	}
 
     		if(!captcha_check($data['captcha'])){
-			$this -> error('验证码错误!');
+			    $this -> error('验证码错误!');
 			};
             
 			$res = model('Manager')->login($data['name'],$data['password']);
