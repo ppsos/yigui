@@ -94,7 +94,9 @@ class User extends Home
             'login_times'     => $user['login_times'] + 1,
         );
         db('user')->where('id',$user['id'])->update($data);
-        session('user_id', $user['id']);
+        session_start();
+        session('username', $user['mobile']);
+        session('uid', $user['id']);
     }
 
     // 短信验证
@@ -113,16 +115,25 @@ class User extends Home
 
     public function index()
     {
+        if (!user_is_login()) {
+            $this->error('还没登录，即将跳转到登录页面',url('index/user/login'));
+        }
         return $this -> fetch();
     }
 
     // 订单管理
     public function order(){
+        if (!user_is_login()) {
+            $this->error('还没登录，即将跳转到登录页面',url('index/user/login'));
+        }
     	return $this -> fetch();
     }
 
     // 产品管理
     public function product(){
+        if (!user_is_login()) {
+            $this->error('还没登录，即将跳转到登录页面',url('index/user/login'));
+        }
     	$list = db('product') -> where('status',1) -> order('id desc') -> paginate(10);
     	return $this -> fetch('',[
     		'list' => $list
@@ -131,8 +142,12 @@ class User extends Home
 
     // 添加产品
     public function product_add(){
+        if (!user_is_login()) {
+            $this->error('还没登录，即将跳转到登录页面',url('index/user/login'));
+        }
     	if (request()->isPost()) {
             $data = input('post.');
+            $data['uid']  = session('uid');
 
             if (db('product')->insert($data)) {
                 $this -> success('数据添加成功!','user/product');
@@ -146,6 +161,10 @@ class User extends Home
 
     // 修改产品
     public function product_edit($id){
+        if (!user_is_login()) {
+            $this->error('还没登录，即将跳转到登录页面',url('index/user/login'));
+        }
+        
 		if (request()->isPost()) {
             $data = input('post.');
 
@@ -160,5 +179,13 @@ class User extends Home
                 'res' => $res
             ]);
         }
+    }
+
+    // 退出登录
+    public function loginOut(){
+        session('username', null);
+        session('uid', null);
+
+        $this->redirect(url('index/user/login'));
     }
 }

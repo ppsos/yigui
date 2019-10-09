@@ -42,6 +42,12 @@ class Fac extends Base
     public function edit($id){
     	if (request()->isPost()) {
     		$data = input('post.');
+            if (!isset($data['led_status'])) {
+                $data['led_status'] = 0;
+            }
+            if (!isset($data['hot_status'])) {
+                $data['hot_status'] = 0;
+            }
             if (!empty($data['status'])) {
                 $data['status'] = 1;
             }else{

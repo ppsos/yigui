@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-10-09 11:51:49
+Date: 2019-10-09 17:44:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -100,9 +100,9 @@ CREATE TABLE `fac` (
 -- ----------------------------
 -- Records of fac
 -- ----------------------------
-INSERT INTO `fac` VALUES ('3', '7w9ce4lorcm4c7617ch9ahh2hjtjfldt', '设备一号', '1', '1', '1');
-INSERT INTO `fac` VALUES ('2', '0b8evr12h3t80o4roa4d4h5kqljtf5uw', '设备二号', '0', '1', '1');
-INSERT INTO `fac` VALUES ('4', 'dsvobmtmn0s6g8oo2kp12irhqbeijlj0', '设备三号', '1', '1', '1');
+INSERT INTO `fac` VALUES ('3', '7w9ce4lorcm4c7617ch9ahh2hjtjfldt', '设备一号', '0', '0', '0');
+INSERT INTO `fac` VALUES ('2', '0b8evr12h3t80o4roa4d4h5kqljtf5uw', '设备二号', '1', '1', '0');
+INSERT INTO `fac` VALUES ('1', 'dsvobmtmn0s6g8oo2kp12irhqbeijlj0', '设备三号', '0', '0', '0');
 
 -- ----------------------------
 -- Table structure for manager
@@ -123,7 +123,7 @@ CREATE TABLE `manager` (
 -- ----------------------------
 -- Records of manager
 -- ----------------------------
-INSERT INTO `manager` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '5', '1569659912', '0', '1', '2130706433');
+INSERT INTO `manager` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '6', '1570606301', '0', '1', '2130706433');
 INSERT INTO `manager` VALUES ('2', '总编', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1', '1', null);
 INSERT INTO `manager` VALUES ('3', '栏目主编', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '2', '1', null);
 
@@ -140,7 +140,7 @@ CREATE TABLE `picture` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of picture
@@ -159,6 +159,7 @@ INSERT INTO `picture` VALUES ('11', '20191007/d1ef8736d35c97c9a88597561d7b6a05.j
 INSERT INTO `picture` VALUES ('12', '20191007/6cfcee71e2037a5078b96b3ed1ec854e.jpg', '', '2ba1d8606c3831e2ba4a12081b965e30', 'fc8ea402de938da27fcdf5450feadfae9282270a', '1', '1570432569');
 INSERT INTO `picture` VALUES ('13', '20191007/878c8dc99cb30a0b2d4c321754c3ec0c.jpg', '', 'b53329f89fcb7ab7c2effe7f5bcf5278', '4615f81e799bf14456576581b432eb1231f60e96', '1', '1570434289');
 INSERT INTO `picture` VALUES ('14', '20191007/e45cd89c8efcffc4a4887ff087b2c88e.jpg', '', '3608fb4b788a221f975adb4938eabdef', '51b9b4d51e51225dd21012f08778a23eaaa5da5e', '1', '1570436443');
+INSERT INTO `picture` VALUES ('15', '20191009/e724979b869ca6fa63a7243a0b08854c.jpg', '', 'b11249f05e7eb95f9899a54e3728e3f3', '82a4d70eda8d50ce76dd2e7229265dded9a34534', '1', '1570611534');
 
 -- ----------------------------
 -- Table structure for product
@@ -166,18 +167,20 @@ INSERT INTO `picture` VALUES ('14', '20191007/e45cd89c8efcffc4a4887ff087b2c88e.j
 DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
+  `uid` int(10) NOT NULL,
   `title` varchar(12) NOT NULL COMMENT '标题',
   `price` varchar(12) NOT NULL COMMENT '价格',
   `cover_id` int(10) NOT NULL COMMENT '缩略图',
   `status` int(4) NOT NULL COMMENT '是否显示',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product
 -- ----------------------------
-INSERT INTO `product` VALUES ('1', '三人沙发套干洗单次', '80', '13', '1');
-INSERT INTO `product` VALUES ('2', '衣服干洗（一桶）', '10', '14', '1');
+INSERT INTO `product` VALUES ('1', '1', '三人沙发套干洗单次', '80', '13', '1');
+INSERT INTO `product` VALUES ('2', '1', '衣服干洗（一桶）', '10', '14', '1');
+INSERT INTO `product` VALUES ('3', '1', '干洗球鞋', '20', '15', '1');
 
 -- ----------------------------
 -- Table structure for sms
@@ -202,7 +205,7 @@ INSERT INTO `sms` VALUES ('1', '18577786023', '781591', '1570593050');
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `name` varchar(25) NOT NULL COMMENT '用户名',
+  `name` varchar(25) DEFAULT NULL COMMENT '用户名',
   `mobile` varchar(25) NOT NULL COMMENT '手机号码',
   `password` char(32) NOT NULL COMMENT '密码',
   `login_times` int(10) NOT NULL DEFAULT '0' COMMENT '登录次数',
@@ -216,4 +219,4 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '', '18577786023', 'e10adc3949ba59abbe56e057f20f883e', '1', '1570593079', '1', '2130706433', '1570593069');
+INSERT INTO `user` VALUES ('1', '18577786023', '18577786023', 'e10adc3949ba59abbe56e057f20f883e', '7', '1570605799', '1', '2130706433', '1570593069');

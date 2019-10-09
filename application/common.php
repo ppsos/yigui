@@ -13,11 +13,24 @@ use Aliyun\Api\Sms\Request\V20170525\SendSmsRequest;
  * @return integer 0-未登录，大于0-当前登录用户ID
  */
 function is_login(){
-    $user_id = session('name');
+    $name = session('name');
     if (empty($name)) {
         return 0;
     } else {
         return $name;
+    }
+}
+
+/**
+ * 前台检测用户是否登录
+ * @return integer 0-未登录，大于0-当前登录用户ID
+ */
+function user_is_login(){
+    $username = session('username');
+    if (empty($username)) {
+        return false;
+    } else {
+        return $username;
     }
 }
 

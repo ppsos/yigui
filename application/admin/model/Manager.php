@@ -38,7 +38,8 @@ class Manager extends Model
             'login_times'     => $user['login_times'] + 1,
         );
         $this->save($data,['id' => $user['id']]);
-        session('user_id', $user['id']);
+        session('name', $user['name']);
+        session('uid', $user['id']);
     }
 
     /*
