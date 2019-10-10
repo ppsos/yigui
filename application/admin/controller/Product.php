@@ -12,7 +12,7 @@ class Product extends Base
         ]);
     }
 
-    // 添加设备
+    // 添加
     public function add(){
     	if (request()->isPost()) {
             $data = input('post.');

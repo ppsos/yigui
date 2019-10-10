@@ -35,6 +35,17 @@ function user_is_login(){
 }
 
 /**
+ * 前台获取用户名称
+ * @return integer 0-未登录，大于0-当前登录用户ID
+ */
+function get_index_username($uid){
+    $user = Db::name('user') -> find($uid);
+    if ($user) {
+        return $user['mobile'];
+    }
+}
+
+/**
  * 获取文档封面图片
  * @param int $cover_id
  * @param string $field

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-10-09 17:44:17
+Date: 2019-10-10 18:01:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -123,7 +123,7 @@ CREATE TABLE `manager` (
 -- ----------------------------
 -- Records of manager
 -- ----------------------------
-INSERT INTO `manager` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '6', '1570606301', '0', '1', '2130706433');
+INSERT INTO `manager` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '7', '1570696875', '0', '1', '2130706433');
 INSERT INTO `manager` VALUES ('2', '总编', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1', '1', null);
 INSERT INTO `manager` VALUES ('3', '栏目主编', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '2', '1', null);
 
@@ -140,7 +140,7 @@ CREATE TABLE `picture` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of picture
@@ -160,6 +160,7 @@ INSERT INTO `picture` VALUES ('12', '20191007/6cfcee71e2037a5078b96b3ed1ec854e.j
 INSERT INTO `picture` VALUES ('13', '20191007/878c8dc99cb30a0b2d4c321754c3ec0c.jpg', '', 'b53329f89fcb7ab7c2effe7f5bcf5278', '4615f81e799bf14456576581b432eb1231f60e96', '1', '1570434289');
 INSERT INTO `picture` VALUES ('14', '20191007/e45cd89c8efcffc4a4887ff087b2c88e.jpg', '', '3608fb4b788a221f975adb4938eabdef', '51b9b4d51e51225dd21012f08778a23eaaa5da5e', '1', '1570436443');
 INSERT INTO `picture` VALUES ('15', '20191009/e724979b869ca6fa63a7243a0b08854c.jpg', '', 'b11249f05e7eb95f9899a54e3728e3f3', '82a4d70eda8d50ce76dd2e7229265dded9a34534', '1', '1570611534');
+INSERT INTO `picture` VALUES ('16', '20191010/a59e0881c9b4f8369ce79044d188c514.jpg', '', 'd9840f61098b63f4518693a9dfd81657', '23a7b10ebdc1549e8763c66ba501d486bc3582f9', '1', '1570697315');
 
 -- ----------------------------
 -- Table structure for product
@@ -183,6 +184,29 @@ INSERT INTO `product` VALUES ('2', '1', '衣服干洗（一桶）', '10', '14', 
 INSERT INTO `product` VALUES ('3', '1', '干洗球鞋', '20', '15', '1');
 
 -- ----------------------------
+-- Table structure for shop
+-- ----------------------------
+DROP TABLE IF EXISTS `shop`;
+CREATE TABLE `shop` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `uid` int(10) NOT NULL COMMENT 'UID',
+  `title` varchar(12) NOT NULL COMMENT '店铺名称',
+  `name` varchar(12) NOT NULL COMMENT '姓名',
+  `cover_id` int(12) NOT NULL,
+  `mobile` varchar(15) NOT NULL,
+  `address` varchar(32) NOT NULL COMMENT '地址',
+  `set_up` int(2) NOT NULL DEFAULT '1' COMMENT '开店状态  1开 0关',
+  `status` int(4) NOT NULL DEFAULT '0' COMMENT '店铺状态 1通过 0不通过',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of shop
+-- ----------------------------
+INSERT INTO `shop` VALUES ('3', '2', 'ck干洗店', 'ck', '15', '18577786023', '南宁市西乡塘区大学东路169号', '1', '1');
+INSERT INTO `shop` VALUES ('2', '1', '南职干洗店', '萌萌哒', '15', '18577786023', '南宁职业技术学院', '1', '1');
+
+-- ----------------------------
 -- Table structure for sms
 -- ----------------------------
 DROP TABLE IF EXISTS `sms`;
@@ -192,12 +216,13 @@ CREATE TABLE `sms` (
   `code` int(6) NOT NULL COMMENT '验证码',
   `send_time` int(12) NOT NULL COMMENT '发送时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sms
 -- ----------------------------
 INSERT INTO `sms` VALUES ('1', '18577786023', '781591', '1570593050');
+INSERT INTO `sms` VALUES ('2', '18577786023', '333349', '1570697276');
 
 -- ----------------------------
 -- Table structure for user
@@ -214,9 +239,10 @@ CREATE TABLE `user` (
   `last_login_ip` char(35) DEFAULT NULL COMMENT '登录IP',
   `create_time` int(12) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '18577786023', '18577786023', 'e10adc3949ba59abbe56e057f20f883e', '7', '1570605799', '1', '2130706433', '1570593069');
+INSERT INTO `user` VALUES ('1', '18577786024', '18577786024', 'e10adc3949ba59abbe56e057f20f883e', '8', '1570693646', '1', '2130706433', '1570593069');
+INSERT INTO `user` VALUES ('2', null, '18577786023', 'e10adc3949ba59abbe56e057f20f883e', '1', '1570697298', '1', '2130706433', '1570697289');
