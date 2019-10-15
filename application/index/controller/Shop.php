@@ -17,9 +17,15 @@ class Shop extends Home
             $this->error('还没登录，即将跳转到登录页面',url('index/user/login'));
         }
 
+        $uid  = session('uid');
+        $user = db('shop')-> where('uid',$uid) -> find();
+        if ($user) {
+            $this -> error('您已提交过入驻资料!');
+        }
+
         if (request()->isPost()) {
             $data = input('post.');
-            $data['uid']  = session('uid');
+            $data['uid']  = $uid;
 
             if (db('shop')->insert($data)) {
                 $this -> success('数据添加成功!','user/index');

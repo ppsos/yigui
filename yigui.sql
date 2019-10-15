@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-10-10 18:01:51
+Date: 2019-10-15 15:02:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -123,7 +123,7 @@ CREATE TABLE `manager` (
 -- ----------------------------
 -- Records of manager
 -- ----------------------------
-INSERT INTO `manager` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '7', '1570696875', '0', '1', '2130706433');
+INSERT INTO `manager` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '9', '1570864304', '0', '1', '2130706433');
 INSERT INTO `manager` VALUES ('2', '总编', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1', '1', null);
 INSERT INTO `manager` VALUES ('3', '栏目主编', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '2', '1', null);
 
@@ -245,4 +245,4 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('1', '18577786024', '18577786024', 'e10adc3949ba59abbe56e057f20f883e', '8', '1570693646', '1', '2130706433', '1570593069');
-INSERT INTO `user` VALUES ('2', null, '18577786023', 'e10adc3949ba59abbe56e057f20f883e', '1', '1570697298', '1', '2130706433', '1570697289');
+INSERT INTO `user` VALUES ('2', null, '18577786023', 'e10adc3949ba59abbe56e057f20f883e', '5', '1571024801', '1', '2130706433', '1570697289');

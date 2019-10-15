@@ -45,3 +45,21 @@ function get_username(){
         return $username;
     }
 }
+
+/**
+ * 判断是否
+ * @param  
+ * @return 
+ * @author 
+ */
+function get_shop_entry(){
+    $uid  = session('uid');
+    if (isset($uid)) {
+        $user = db('shop')-> where('uid',$uid) -> find();
+        if ($user && $user['set_up'] == 1) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+}
