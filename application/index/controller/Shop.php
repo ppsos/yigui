@@ -16,9 +16,9 @@ class Shop extends Home
     	if (!user_is_login()) {
             $this->error('还没登录，即将跳转到登录页面',url('index/user/login'));
         }
-
         $uid  = session('uid');
         $user = db('shop')-> where('uid',$uid) -> find();
+
         if ($user) {
             $this -> error('您已提交过入驻资料!');
         }
