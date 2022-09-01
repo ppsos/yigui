@@ -7,7 +7,7 @@ class User extends Controller
 {
     public function index(){
         if (!is_login()) {
-            $this->error('还没登录...，即将跳转到登录页面',url('manager/login'));
+            $this->error('还没登录......，即将跳转到登录页面',url('manager/login'));
         }
 
         $res = db('user') ->order('id','desc')-> select();
