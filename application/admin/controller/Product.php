@@ -6,9 +6,9 @@ class Product extends Base
 {
     public function index()
     {
-        // $res = db('fac') -> order('id desc') -> select();
+        $res = db('product') -> order('id desc') -> select();
         return $this -> fetch('',[
-            
+            'res' => $res,
         ]);
     }
 

@@ -68,6 +68,46 @@
 									<span class="text-normal">订单管理</span>
 								</a>
 							</li>
+							<li>
+								<a href="{:url('user/user_order')}">
+									<b class="sidebar-icon"><img src="__IMG__/icon_order.png" width="16" height="16" /></b>
+									<span class="text-normal">我的订单</span>
+								</a>
+							</li>
+							<li>
+								<a href="{:url('address/index')}">
+									<b class="sidebar-icon"><img src="__IMG__/icon_cost.png" width="16" height="16" /></b>
+									<span class="text-normal">地址管理</span>
+								</a>
+							</li>
+							<li>
+								<a href="{:url('shebei/index')}">
+									<b class="sidebar-icon"><img src="__IMG__/icon_cost.png" width="16" height="16" /></b>
+									<span class="text-normal">设备管理</span>
+								</a>
+							</li>
+
+
+							{else /}
+
+							<li>
+								<a href="{:url('user/user_order')}">
+									<b class="sidebar-icon"><img src="__IMG__/icon_order.png" width="16" height="16" /></b>
+									<span class="text-normal">我的订单</span>
+								</a>
+							</li>
+							<li>
+								<a href="{:url('address/index')}">
+									<b class="sidebar-icon"><img src="__IMG__/icon_cost.png" width="16" height="16" /></b>
+									<span class="text-normal">地址管理</span>
+								</a>
+							</li>
+							<li>
+								<a href="{:url('shebei/index')}">
+									<b class="sidebar-icon"><img src="__IMG__/icon_cost.png" width="16" height="16" /></b>
+									<span class="text-normal">设备管理</span>
+								</a>
+							</li>
 							{/if}
 						</ul>
 					</div>

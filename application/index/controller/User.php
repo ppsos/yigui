@@ -118,6 +118,18 @@ class User extends Home
         if (!user_is_login()) {
             $this->error('还没登录，即将跳转到登录页面',url('index/user/login'));
         }
+        $id       = session('uid');
+        $username = session('username');
+
+        $where = array(
+            'mobile' => $username,
+            'id' => $id,
+        );
+        $list = db('user') -> where($where) -> select();
+        // print_r($list);exit;
+        return $this -> fetch('',[
+            'lists' => $list,
+        ]);
         return $this -> fetch();
     }
 
@@ -126,7 +138,63 @@ class User extends Home
         if (!user_is_login()) {
             $this->error('还没登录，即将跳转到登录页面',url('index/user/login'));
         }
-    	return $this -> fetch();
+        $uid  = session('uid');
+        $where = array(
+            'shop_id' => $uid
+        );
+        $list = db('order') -> where($where) -> select();
+
+        foreach ($list as $key => $value) {
+            $res  = db('product') -> find($value['product_id']);
+            $list[$key]['product'] = $res['title'];
+
+
+            $user = db('user') -> find($value['uid']);
+            $list[$key]['username'] = $user['mobile'];
+
+            $address = db('address') -> find($value['address_id']);
+            $list[$key]['address'] = $address['address'];
+
+            $user_mobile = db('address') -> find($value['address_id']);
+            $list[$key]['mobile'] = $user_mobile['mobile'];
+        }
+    	return $this -> fetch('',[
+            'list' => $list
+        ]);
+    }
+
+    // 我的订单(客户)
+    public function user_order(){
+        if (!user_is_login()) {
+            $this->error('还没登录，即将跳转到登录页面',url('index/user/login'));
+        }
+        $uid  = session('uid');
+        $where = array(
+            'uid' => $uid
+        );
+        $list = db('order') -> where($where) -> select();
+        foreach ($list as $key => $value) {
+            $res = db('product') -> find($value['product_id']);
+            $list[$key]['product'] = $res['title'];
+            $user = db('user') -> find($value['uid']);
+            $list[$key]['username'] = $user['mobile'];
+        }
+        return $this -> fetch('',[
+            'list' => $list
+        ]);
+    }
+
+    // 商家发货
+    public function orderstatus(){
+        if (request()->isPost()) {
+            $data = input('post.');
+
+            if (db('order')->where('id',$data['id'])->update($data)) {
+                $this -> success('已发货!');
+            }else{
+                $this -> error('发货失败!');
+            }
+        }
     }
 
     // 产品管理
@@ -134,7 +202,21 @@ class User extends Home
         if (!user_is_login()) {
             $this->error('还没登录，即将跳转到登录页面',url('index/user/login'));
         }
-    	$list = db('product') -> where('status',1) -> order('id desc') -> paginate(10);
+        $uid  = session('uid');
+        $where = array(
+            'uid'  => $uid,
+            'status' => 1
+        );
+        $user = db('shop')-> where($where) -> find();
+        if (!$user) {
+            $this -> error('您店铺未审核!');
+        }
+
+        $data = array(
+            'uid'  => $uid,
+            'status' => 1
+        );
+    	$list = db('product') -> where($data) -> order('id desc') -> paginate(100);
     	return $this -> fetch('',[
     		'list' => $list
     	]);
@@ -145,9 +227,20 @@ class User extends Home
         if (!user_is_login()) {
             $this->error('还没登录，即将跳转到登录页面',url('index/user/login'));
         }
+
+        $uid  = session('uid');
+        $where = array(
+            'uid' => $uid,
+            'status' => 1
+        );
+        $user = db('shop')-> where($where) -> find();
+        if (!$user) {
+            $this -> error('您店铺未审核!');
+        }
+
     	if (request()->isPost()) {
             $data = input('post.');
-            $data['uid']  = session('uid');
+            $data['uid']  = $uid;
 
             if (db('product')->insert($data)) {
                 $this -> success('数据添加成功!','user/product');
@@ -163,6 +256,16 @@ class User extends Home
     public function product_edit($id){
         if (!user_is_login()) {
             $this->error('还没登录，即将跳转到登录页面',url('index/user/login'));
+        }
+
+        $uid  = session('uid');
+        $where = array(
+            'uid' => $uid,
+            'status' => 1
+        );
+        $user = db('shop')-> where($where) -> find();
+        if (!$user) {
+            $this -> error('您店铺未审核!');
         }
         
 		if (request()->isPost()) {

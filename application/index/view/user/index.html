@@ -17,7 +17,7 @@
 							<dl>
 								<dt class="padding-big-left lists-border-list clearfix">
 									<div class="title fl padding-big-top padding-big-bottom">
-										<p>HI,小朱</p>
+										<p>HI,{:get_username();}</p>
 										<p class="margin-small-top clearfix">
 											<span class="fl">账户安全级别：<em class="text-blue-deep">高</em></span>
 											<!--没有实名认证-->
@@ -58,8 +58,10 @@
 									<div class="fl w50 title">
 										<p>账户余额</p>
 										<p class="margin-small-top clearfix">
-											<span class="fl"><em class="h3 text-red-deep">0.00 </em>元</span>
-											<a class="fl margin-left button btn-red text-white"  href="#">充值</a>
+											{volist name="lists" id="vo"}
+											<span class="fl"><em class="h3 text-red-deep">{$vo.money}</em>元</span>
+											{/volist}
+											<a class="fl margin-left button btn-red text-white"  href="{:url('pay/index')}">充值</a>
 										</p>
 									</div>
 									<div class="fl w50 padding-left title">
@@ -72,8 +74,7 @@
 								</dt>
 								<dd class="padding-big">
 									<div class="account-class text-hidden">
-										<a href="#">未支付订单</a>
-										<a href="#">已支付订单</a>
+										<a href="{:url('user/user_order')}">已支付订单</a>
 										<a href="#">充值记录</a>
 										<a href="#">消费记录</a>
 										<a href="#">提交工单</a>

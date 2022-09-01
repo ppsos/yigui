@@ -18,35 +18,49 @@
 		            <div class="offcial-table input-table table-margin clearfix">
 		                <div class="tr-th clearfix">
 		                    <div class="th w5 text-center"><!--<input class="margin-top-15" type="checkbox" />--></div>
-		                    <div class="th w20">订单号</div>
-		                    <div class="th w20">产品</div>
-		                    <div class="th w15">创建时间</div>
-		                    <div class="th w15">支付/开通时间</div>
-		                    <div class="th w10">
+		                    <div class="th w15">订单号</div>
+		                    <div class="th w10">产品</div>
+		                    <div class="th w10">创建时间</div>
+		                    <div class="th w10">买家账号</div>
+		                    <div class="th w20">买家地址</div>
+		                    <div class="th w10">买家电话</div>
+		                    <div class="th w5">
 		                    	支付状态
-		                    	<!--<div class="select-table status-table fl status-left">
-					        		<div>
-					        			<input class="status-total" type="text" readonly="readonly" value="已支付">
-					        			<span class="bg-img"></span>
-					        		</div>
-					        		<ul>
-					        			<li><a href="#">所有状态</a></li>
-					        			<li class="on"><a href="#">已支付</a></li>
-					        		</ul>
-					        	</div>-->
 		                    </div>
 		                    <div class="th w10">金额</div>
 		                    <div class="th w5 text-center">操作</div>
 		                </div>
-		                			            <div class="tr non-info show border-bottom-none">
+		                {empty name="list"}
+		                <div class="tr non-info show border-bottom-none">
 			            	<span>没查询到符合条件的记录</span>
 			            </div>
-			            		            </div>
+			            {else /}
+			            {volist name="list" id="vo"}
+			            <div class="tr clearfix">
+			            	<div class="th w5 text-center"></div>
+		                    <div class="th w15">{$vo.orderid}</div>
+		                    <div class="th w10">{$vo.product}</div>
+		                    <div class="th w10">{$vo.create_time|date="Y-m-d H:i:s",###}</div>
+		                    <div class="th w10">{$vo.username}</div>
+		                    <div class="th w20">{$vo.address}</div>
+		                    <div class="th w10">{$vo.mobile}</div>
+		                    <div class="th w5">
+		                    	{if condition="$vo['status'] == 1"}已支付{/if}
+		                    </div>
+		                    <div class="th w10">{$vo.price}元</div>
+		                    <div class="th w5 text-center">
+		                    	{if condition="$vo['order_status'] == 0"}
+		                    	<a href="javascript:;" onclick="fahuo('{$vo.id}',1);">发货</a>
+		                    	{/if}
+		                    </div>
+			            </div>
+			            {/volist}
+			            {/empty}
+			        </div>
 		        </div>
 		        <div class="show-page padding-big-right hidden">
-					<div class="page">
-											</div>
-		        </div>
+					<div class="page"></div>
+		       </div>
 			</div>
 		</div>
 
@@ -60,6 +74,14 @@
 					$(this).parent(".sidebar-nav").addClass("sidebar-nav-fold");
 				}
 			});
+			function fahuo(id,status){
+				var url = "{:url('user/orderstatus')}"
+				$.post(url,{id:id,order_status:status},function(data){
+					layer.msg(data.msg,function(){
+						window.location.reload();
+					});
+				})
+			}
 		</script>
 	</body>
 

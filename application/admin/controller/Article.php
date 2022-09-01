@@ -33,11 +33,7 @@ class Article extends Base
                 $data['is_index'] = 0;
             }
             $data['create_time'] = time();
-            $res = db('document') -> order('id desc') -> find();
-            $res['id'] = $res['id'] + 1 ;
-            $data['url'] = 'https://www.17pptmoban.com/index/article/detail/id/'.$res['id'].'.html';
 
-            // print_r($data);exit;
             if (db('document')->insert($data)) {
                 $this -> success('文章添加成功!');
             }else{

@@ -26,7 +26,7 @@ class Aliyun extends Home
             }
 
     		// 正式发送验证码
-    		$send = send_sms($mobile,'1',$code);
+    		$send = ali_send_sms($mobile,'1',$code);
     		if ($send['Message'] != 'OK') {
     			$this -> error('短信发送失败！');
     		}else{

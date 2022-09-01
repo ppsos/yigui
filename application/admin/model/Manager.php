@@ -66,7 +66,4 @@ class Manager extends Model
 
         return $this -> order($order) -> select();
     }
-
-
-
 }
